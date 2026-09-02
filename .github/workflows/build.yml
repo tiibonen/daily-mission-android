@@ -21,14 +21,16 @@ jobs:
         with:
           gradle-version: '8.10.2'
 
-      - name: Unpack Android project
+      - name: Unpack fixed project
         run: |
-          unzip -q daily-mission-android-project.zip
-          cd daily-mission-android
-          gradle :app:assembleDebug
+          unzip -o daily-mission-android-project-fixed.zip
+
+      - name: Build APK
+        working-directory: daily-mission-android-fixed
+        run: gradle :app:assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: daily-mission-apk
-          path: daily-mission-android/app/build/outputs/apk/debug/app-debug.apk
+          name: daily-mission-apk-fixed
+          path: daily-mission-android-fixed/app/build/outputs/apk/debug/app-debug.apk
